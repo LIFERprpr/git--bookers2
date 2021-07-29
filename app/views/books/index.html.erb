@@ -22,7 +22,7 @@
         </table>
 
         <div class="row">
-          <a class="btn btn-outline-secondary btn-block fas fa-user-cog edit_user_9448" href="/users/9448/edit"></a>
+           <%= link_to "", edit_user_path(current_user), class: 'btn btn-outline-secondary btn-block fas fa-user-cog edit_user_9055' %>
         </div>
 
         <h2 class="mt-3">New book</h2>
@@ -60,7 +60,7 @@
                   <%= attachment_image_tag @user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: "40x40" %>
                   <% end %>
                 </td>
-                <td><%= link_to book_path(book.user) do %>
+                <td><%= link_to book_path(book.id) do %>
                   <%= book.title %>
                   <% end %>
                 </td>
