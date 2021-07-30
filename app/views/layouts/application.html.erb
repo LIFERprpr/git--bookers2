@@ -56,6 +56,15 @@
       </nav>
     </head>
 
+
+    <% flash.each do |key, value| %>
+      <p class="<%= key %>">
+        <%= value %>
+      </p>
+    <% end %>
+
+
+
     <%= yield %>
 
 
