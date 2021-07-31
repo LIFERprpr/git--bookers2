@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
+  before_action :check_user, {only: :edit}
 
   def index
     @users = User.all
+    @book = Book.new
+    @user = current_user
+    
 
   end
 
@@ -34,6 +38,13 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
+  end
+  
+  def check_user
+    user = User.find(params[:id])
+    if user.id != current_user.id
+      redirect_to user_path(current_user)
+    end
   end
 
 end

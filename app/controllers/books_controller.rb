@@ -1,8 +1,11 @@
 class BooksController < ApplicationController
+  before_action :check_user, {only: :edit}
 
   def index
     @books = Book.all
     @book = Book.new
+    @user =current_user
+    
 
   end
 
@@ -14,6 +17,7 @@ class BooksController < ApplicationController
     redirect_to book_path(@book.id)
     else
       @books = Book.all
+      @user = current_user
       render "index"
 
     end
@@ -21,6 +25,8 @@ class BooksController < ApplicationController
   end
 
   def show
+    @book_new = Book.new
+    
      #<Book id: 1, title: "test", body: "test", created_at: "2021-07-28 05:03:46", updated_at: "2021-07-28 05:03:46", user_id: 1>
     @book = Book.find(params[:id])
      #<User id: 1, email: "dmmweb@gmail.com", name: "dmm", created_at: "2021-07-26 08:45:07", updated_at: "2021-07-26 08:45:07", introduction: nil, profile_image_id: nil>
@@ -56,4 +62,12 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
+  
+  def check_user
+    book = Book.find(params[:id])
+    if book.user_id != current_user.id
+      redirect_to books_path
+    end
+  end
+  
 end
